@@ -22,7 +22,8 @@ INSERT INTO players VALUES
   ("1001","Harry","Kane","11-11-11","Male","508-320-7922","harryK@google.com","10","Tottenham","44 Hickery Lyne","2","Burlington","MA","1803"),
   ("1002","Christiano","Rolando","05-12-09","Male","508-652-7975","christianoR@gmail.com","7","Man United","39 Hiltop DR","","Burlington","MA","1803"),
   ("1003","Neymar","da Silva","09-12-09","Male","987-652-7975","neymarda@yahoo.com","11","PSG","12 Sandybrook DR","","Burlington","MA","1803"),
-  ("1004","Lionel","Messi","01-05-05","Male","987-652-8544","lionelmessi@yahoo.com","10","FC Barcelona","85 Church hill DR","","Lexington","MA","1803");
+  ("1004","Lionel","Messi","01-05-05","Male","987-652-8544","lionelmessi@yahoo.com","10","FC Barcelona","85 Church hill DR","","Lexington","MA","1803"),
+  ("1005","Paul","Pogba","09-12-09","Male","987-652-7975","paulP@yahoo.com","11","Man United","12 Sandybrook DR","","Burlington","MA","1803");
 
 DROP TABLE IF EXISTS teams;
 CREATE TABLE teams (
