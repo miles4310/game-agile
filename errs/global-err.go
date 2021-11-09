@@ -1,6 +1,9 @@
 package errs
 
-import "net/http"
+import (
+	"g/go/allsports/logger"
+	"net/http"
+)
 
 type AppError struct {
 	Code    int    `json:",omitempty"`
@@ -8,6 +11,7 @@ type AppError struct {
 }
 
 func NewNotFoundError(message string) *AppError {
+	logger.Error(message)
 	return &AppError{
 		Message: message,
 		Code:    http.StatusNotFound,
@@ -15,6 +19,7 @@ func NewNotFoundError(message string) *AppError {
 }
 
 func NewUnexpectedError(message string) *AppError {
+	logger.Error(message)
 	return &AppError{
 		Message: message,
 		Code:    http.StatusInternalServerError,

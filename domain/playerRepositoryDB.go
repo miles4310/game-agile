@@ -3,7 +3,7 @@ package domain
 import (
 	"database/sql"
 	"g/go/allsports/errs"
-	"log"
+	"g/go/allsports/logger"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -22,9 +22,9 @@ func (pl PlayerRepositoryDb) ById(id string) (*Player, *errs.AppError) {
 		&p.Team, &p.Address.Address1, &p.Address.Address2, &p.Address.City, &p.Address.State, &p.Address.Zipcode)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return nil, errs.NewNotFoundError("player not found")
+			return nil, errs.NewNotFoundError("player not found: " + id)
 		} else {
-			log.Println("Error while scanning players table " + err.Error())
+			logger.Error("Error while scanning players table " + err.Error())
 			return nil, errs.NewUnexpectedError("unexpected error")
 		}
 	}
@@ -39,7 +39,7 @@ func (p PlayerRepositoryDb) FindAll() ([]Player, *errs.AppError) {
 	rows, err := p.client.Query(findAllSql)
 
 	if err != nil {
-		log.Println("Error while querying players table " + err.Error())
+		logger.Error("Error while querying players table " + err.Error())
 		return nil, errs.NewUnexpectedError("Unexpected error")
 	}
 
@@ -49,11 +49,10 @@ func (p PlayerRepositoryDb) FindAll() ([]Player, *errs.AppError) {
 		err := rows.Scan(&p.Id, &p.FirstName, &p.LastName, &p.DateofBirth, &p.Gender, &p.PhoneNumber, &p.EmailAddress, &p.JerseNumber,
 			&p.Team, &p.Address.Address1, &p.Address.Address2, &p.Address.City, &p.Address.State, &p.Address.Zipcode)
 		if err != nil {
-			log.Println("Error while scanning players table " + err.Error())
+			logger.Error("Error while scanning players table " + err.Error())
 		}
 		customers = append(customers, p)
 	}
-
 	return customers, nil
 }
 
