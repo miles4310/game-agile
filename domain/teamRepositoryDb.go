@@ -3,10 +3,8 @@ package domain
 import (
 	"database/sql"
 	"g/go/allsports/errs"
-	"log"
+	"g/go/allsports/logger"
 	"time"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type TeamRepositoryDb struct {
@@ -27,10 +25,9 @@ func (team TeamRepositoryDb) ByName(name string) (*Team, *errs.AppError) {
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return nil, errs.NewNotFoundError("Team Not Found")
+			return nil, errs.NewNotFoundError("Team Not Found: " + name)
 		} else {
-			log.Println("Error while scanning team table " + err.Error())
-
+			logger.Error("Error while scanning team table " + err.Error())
 			return nil, errs.NewUnexpectedError("Unexpected Error")
 		}
 	}
@@ -45,7 +42,7 @@ func (team TeamRepositoryDb) FindAll() ([]Team, *errs.AppError) {
 	rows, err := team.client.Query(findAllSql)
 
 	if err != nil {
-		log.Println("Error while querying team table " + err.Error())
+		logger.Error("Error while querying team table " + err.Error())
 		return nil, errs.NewUnexpectedError("Unexpected Error")
 
 	}
@@ -63,7 +60,7 @@ func (team TeamRepositoryDb) FindAll() ([]Team, *errs.AppError) {
 			if err == sql.ErrNoRows {
 				return nil, errs.NewNotFoundError("Team Not Found")
 			} else {
-				log.Println("Error while scanning team table " + err.Error())
+				logger.Error("Error while scanning team table " + err.Error())
 				return nil, errs.NewUnexpectedError("Unexpected Error")
 			}
 		}

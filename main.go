@@ -2,10 +2,12 @@ package main
 
 import (
 	"g/go/allsports/app"
+	"g/go/allsports/logger"
 )
 
 func main() {
 
-	app.Start()
+	logger.Info("Starting the application ....")
 
+	app.Start()
 }
